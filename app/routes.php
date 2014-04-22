@@ -15,3 +15,32 @@ Route::get('/', function()
 {
 	return View::make('hello');
 });
+
+Route::group(array('before' => 'auth', 'prefix' =>  'admin'), function()
+{
+    Route::get('/', array(
+        'as'        =>  'admin.dashboard',
+        'uses'      =>  'AdminDashboardController@index',
+        )
+    );
+});
+
+Route::get('/login', array(
+        'before'    =>  'guest',
+        'as'        =>  'login',
+        'uses'      =>  'AuthController@getLogin',
+    )
+);
+
+Route::post('/login', array(
+        'as'        =>  'login',
+        'uses'      =>  'AuthController@postLogin',
+    )
+);
+
+Route::get('/logout', array(
+        'before'    =>  'auth',
+        'as'        =>  'logout',
+        'uses'      =>  'AuthController@getLogout',
+    )
+);
