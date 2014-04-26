@@ -16,31 +16,39 @@ Route::get('/', function()
 	return View::make('hello');
 });
 
-Route::group(array('before' => 'auth', 'prefix' =>  'admin'), function()
+Route::group(['before' => 'auth', 'prefix' =>  'admin'], function()
 {
-    Route::get('/', array(
+    // Dashboard Route
+    Route::get('/', [
         'as'        =>  'admin.dashboard',
         'uses'      =>  'AdminDashboardController@index',
-        )
+        ]
+    );
+
+    // Settings Route
+    Route::get('/settings', [
+        'as'        =>  'admin.settings',
+        'uses'      =>  'AdminSettingsController@index',
+        ]
     );
 });
 
-Route::get('/login', array(
+Route::get('/login', [
         'before'    =>  'guest',
         'as'        =>  'login',
         'uses'      =>  'AuthController@getLogin',
-    )
+    ]
 );
 
-Route::post('/login', array(
+Route::post('/login', [
         'as'        =>  'login',
         'uses'      =>  'AuthController@postLogin',
-    )
+    ]
 );
 
-Route::get('/logout', array(
+Route::get('/logout', [
         'before'    =>  'auth',
         'as'        =>  'logout',
         'uses'      =>  'AuthController@getLogout',
-    )
+    ]
 );
