@@ -12,6 +12,15 @@ class BaseController extends Controller {
 		if ( ! is_null($this->layout))
 		{
 			$this->layout = View::make($this->layout);
+
+            // Pass through with information flash messages
+            if(Session::get('message'))
+                $this->layout->message = Session::get('message');
+
+            // Pass through with error flash messages
+            if(Session::get('errMessage'))
+                $this->layout->errMessage = Session::get('errMessage');
+
 		}
 	}
 
